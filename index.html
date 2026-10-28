@@ -85,6 +85,8 @@ h2{font-size:clamp(1.65rem,6.2vw,2.2rem);margin-bottom:24px;line-height:1.1}
 .cta p{margin:0 0 18px;font-size:1.2rem;font-weight:800;letter-spacing:-.02em;line-height:1.3;color:#FFF08A}
 .cta .go{background:var(--lemon);color:#1F3A2F;box-shadow:none;animation:pulse 2.2s ease-in-out infinite}
 @keyframes pulse{50%{transform:scale(1.05)}}
+.hint{display:none;margin:18px 0 0;font-size:1.05rem;font-weight:700;line-height:1.4;color:#FFFDE8}
+.hint.on{display:block;animation:in .35s ease}
 .again{display:block;margin:22px auto 0;background:none;border:0;font:inherit;color:var(--soft);text-decoration:underline;cursor:pointer}
 #s0.on{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:calc(100vh - 58px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));min-height:calc(100svh - 58px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}
 #s0 .hero{width:min(150px,22svh)}
@@ -148,6 +150,7 @@ h2{font-size:clamp(1.65rem,6.2vw,2.2rem);margin-bottom:24px;line-height:1.1}
     <div class="cta">
       <p id="ctxt">Повертайся у наш діалог і натисни на свій результат — я покажу, що насправді стоїть за твоїм гальмом і як з ним можна впоратись.</p>
       <a class="go" id="cta" href="#" target="_blank" rel="noopener">Повернутись у діалог</a>
+      <p class="hint" id="hint">Просто закрий цю сторінку хрестиком ✕ угорі — і ти одразу повернешся в наш чат 🍋</p>
     </div>
     <button class="again" id="again">Пройти тест ще раз</button>
   </section>
@@ -238,7 +241,15 @@ function result(){
 
 $("start").onclick=function(){cur=0;ans=[];for(var i=0;i<N;i++)$("w"+i).classList.remove("on");show("s1");render()};
 $("back").onclick=function(){if(cur>0){cur--;$("w"+cur).classList.remove("on");render()}};
-$("again").onclick=function(){$("ld").textContent="Підраховую результати…";show("s0")};
+// всередині Instagram: замість переходу пробуємо закрити вікно, інакше показуємо підказку
+var IN_IG = /Instagram/i.test(navigator.userAgent||"");
+$("cta").onclick=function(e){
+  if(!IN_IG) return;
+  e.preventDefault();
+  try{window.close()}catch(err){}
+  setTimeout(function(){$("hint").classList.add("on")},350);
+};
+$("again").onclick=function(){$("hint").classList.remove("on");$("ld").textContent="Підраховую результати…";show("s0")};
 </script>
 </body>
 </html>
