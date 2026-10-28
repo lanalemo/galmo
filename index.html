@@ -146,7 +146,7 @@ h2{font-size:clamp(1.65rem,6.2vw,2.2rem);margin-bottom:24px;line-height:1.1}
     <h2 id="rt"></h2>
     <div class="txt" id="rb"></div>
     <div class="cta">
-      <p>Повертайся у наш діалог, щоб отримати твій персональний план дій на наступний тиждень.</p>
+      <p id="ctxt">Повертайся у наш діалог і натисни на свій результат — я покажу, що насправді стоїть за твоїм гальмом і як з ним можна впоратись.</p>
       <a class="go" id="cta" href="#" target="_blank" rel="noopener">Повернутись у діалог</a>
     </div>
     <button class="again" id="again">Пройти тест ще раз</button>
@@ -232,6 +232,7 @@ function result(){
   h+='<p><span class="hl">'+HOW+"</span></p>";
   $("rb").innerHTML=h;
   $("cta").href="https://ig.me/m/"+IG+"?ref="+t.k;
+  $("ctxt").textContent="Повертайся у наш діалог і натисни "+t.n+" — я покажу, що насправді стоїть за твоїм гальмом і як з ним можна впоратись.";
   show("s3");
 }
 
